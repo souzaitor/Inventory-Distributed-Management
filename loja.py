@@ -8,6 +8,11 @@ import pandas as pd
 import uuid
 import numpy as np
 
+# Leitura de valores da linha de comando
+parser = argparse.ArgumentParser(description='Simula loja da cadeia de produção')
+parser.add_argument('-n', '--num',  type=int, help='Número da loja', required=True)
+argumentos = parser.parse_args()
+
 # Variáveis globais
 contador_clientes = 0
 nome_loja = "Loja 1"
@@ -26,11 +31,9 @@ def imprimir_estoque():
 
 def debito_estoque(index_produto, quantidade_produto):
     """Retira uma quantiadade de produtos do estoque
-
     Parâmetros:
         index_produto: Número do produto a ser retirado do estoque
         quantidade_produto: Quantidade de elementos do produto a ser retirado do estoque
-
     """
     global estoque
 
@@ -40,11 +43,9 @@ def debito_estoque(index_produto, quantidade_produto):
 
 def credito_estoque(index_produto, quantidade_produto):
     """Adiciona uma quantiadade de produtos do estoque
-
     Parâmetros:
         index_produto: Número do produto a ser retirado do estoque
         quantidade_produto: Quantidade de elementos do produto a ser retirado do estoque
-
     """
     global estoque
 
@@ -155,7 +156,8 @@ def publish():
     # para o estoque, completando o estoque
     if (len(produtos_no_vermelho)>0):
         nova_mensagem = ','.join(str(x) for x in produtos_no_vermelho)
-        client.publish(topico, nome_loja + "," + nova_mensagem);
+        client.publish(topico, nome_loja + "," + nova_mensagem)
+        client.publish(topico, )
 
     return publish()
 
@@ -169,6 +171,9 @@ def subscribe():
 
 
 if __name__ == '__main__':
+    """
+    Função Principal
+    """
     client = mqtt.Client()
     client.connect("broker.hivemq.com",1883,60)
     thr_pub = threading.Thread(target=publish)
