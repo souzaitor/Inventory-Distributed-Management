@@ -7,6 +7,8 @@ from tabulate import tabulate
 import pandas as pd
 import uuid
 import numpy as np
+import time
+import argparse
 
 # Leitura de valores da linha de comando
 parser = argparse.ArgumentParser(description='Simula loja da cadeia de produção')
@@ -15,11 +17,12 @@ argumentos = parser.parse_args()
 
 # Variáveis globais
 contador_clientes = 0
-nome_loja = "Loja 1"
-topico = "repo"
+nome_loja = "Loja " + str(argumentos.num)
+topico = "Repo"
+MAXIMO_ESTOQUE = 100
 
 # Lê estoque de arquivo .csv e salva em lista
-estoque = pd.read_csv('estoque.csv', delimiter=',', index_col=0) 
+estoque = pd.read_csv('estoque_loja.csv', delimiter=',', index_col=0) 
 
 
 def imprimir_estoque():
@@ -107,6 +110,7 @@ def clientes():
 def on_connect(client, userdata, flags, rc):
     os.system('cls' if os.name == 'nt' else 'clear')
     print(nome_loja + " conectada ao tópico " + topico)
+    imprimir_estoque()
     client.subscribe(topico)
 
 
@@ -116,18 +120,21 @@ def on_message(client, userdata, msg):
     mensagem_separada = [x.strip() for x in mensagem_entrada.split(',',1)]
     remetente = mensagem_separada[0]
 
-    # Se recebeu uma mensagem de abastecimento 
-    # do centro de distribuição, realiza o crédito
+    # Se Loja recebeu mensagem de crédito
+    # do Centro de Distribuição, realiza operação de crédito
     if remetente == "Centro Distribuição":
-        print(remetente + ": " + mensagem_separada[1])
-        
-        mensagem_cortada = mensagem_separada[1].split()
-        quantidade_credito = int(mensagem_cortada[1])
-        index_produto = int(mensagem_cortada[4])
-        credito_estoque(index_produto, quantidade_credito)
+        print("{} -> {}: {}".format(remetente, nome_loja, mensagem_separada[1]))
 
+        # Obtém dados do produto
+        dados_produto = mensagem_separada[1].split()
+        id_produto = int(dados_produto[2])
+        qtd_produto = int(dados_produto[4])
+
+        # Realiza operação de crédito no estoque
+        #imprimir_estoque()
+        credito_estoque(id_produto, qtd_produto)
         atualizar_cores()
-        estoque.to_csv('estoque.csv', index=True)
+        #imprimir_estoque()
 
     elif remetente == "noticia":
         print(mensagem_separada[1])
@@ -137,8 +144,6 @@ def publish():
     """
     
     """
-    nova_mensagem = input()
-    
     # Simula a compra aleatória de produtos por clientes
     clientes()
 
@@ -150,14 +155,18 @@ def publish():
 
     # Lista de produtos com estoque na cor vermelha
     produtos_no_vermelho = list(estoque[estoque["Cor"] == "Vermelho"].index)
+    # Quantidade necessária para que produtos no vermelho encham o estoque
+    quantidade_produtos_no_vermelho = list(MAXIMO_ESTOQUE - estoque[estoque["Cor"] == "Vermelho"].Quantidade)
 
     # Se existem produtos no vermelho, envia mensagem no tópico 
     # reposição para que o centro de distribuição envie produtos 
     # para o estoque, completando o estoque
     if (len(produtos_no_vermelho)>0):
-        nova_mensagem = ','.join(str(x) for x in produtos_no_vermelho)
-        client.publish(topico, nome_loja + "," + nova_mensagem)
-        client.publish(topico, )
+        for i in range(len(produtos_no_vermelho)):
+            mensagem_publicada = "Repor Produto {} Quantidade {}".format(produtos_no_vermelho[i],quantidade_produtos_no_vermelho[i])
+            client.publish(topico, nome_loja + "," + mensagem_publicada)
+
+    time.sleep(5)
 
     return publish()
 

@@ -7,7 +7,7 @@ import argparse
 # Leitura de valores da linha de comando
 parser = argparse.ArgumentParser(description='Simula fábrica da cadeia de produção')
 parser.add_argument('-n', '--num',  type=int, help='Número da fábrica',                    required=True)
-parser.add_argument('-p','--prod', nargs='+', help=' de produtos produzidos pela fábrica', required=True)
+parser.add_argument('-p','--prod', nargs='+', help='Lista de produtos produzidos pela fábrica', required=True)
 argumentos = parser.parse_args()
 
 # Variáveis globais

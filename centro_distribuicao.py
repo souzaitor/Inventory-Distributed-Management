@@ -4,6 +4,7 @@ import paho.mqtt.client as mqtt
 import os
 import pandas as pd
 import numpy as np
+from time import sleep
 from tabulate import tabulate
 
 # Variáveis globais
@@ -91,7 +92,7 @@ def on_message(client, userdata, msg):
     # Se Centro de Distribuição recebeu mensagem de crédito
     # de alguma fábrica, realiza operação de crédito
     if "Fábrica" in remetente:
-        print("{}: {}".format(remetente, mensagem_separada[1]))
+        print("{} -> {}: {}".format(remetente, nome_usuario, mensagem_separada[1]))
 
         # Obtém dados do produto
         dados_produto = mensagem_separada[1].split()
@@ -99,16 +100,14 @@ def on_message(client, userdata, msg):
         qtd_produto = int(dados_produto[4])
 
         # Realiza operação de crédito no estoque
-        imprimir_estoque()
         credito_estoque(id_produto, qtd_produto)
         atualizar_cores()
-        imprimir_estoque()
 
     # Se Centro de Distribuição recebeu mensagem de
     # alguma loja, realiza operação de débito e publica
     # no tópico das lojas
     if "Loja" in remetente:
-        print("{}: {}".format(remetente, mensagem_separada[1]))
+        print("{} -> {}: {}".format(remetente, nome_usuario, mensagem_separada[1]))
 
         # Obtém dados do produto
         dados_produto = mensagem_separada[1].split()
@@ -116,27 +115,27 @@ def on_message(client, userdata, msg):
         qtd_produto = int(dados_produto[4])
         
         # Realiza operação de dédito no estoque
-        imprimir_estoque()
+        #imprimir_estoque()
         debito_estoque(id_produto, qtd_produto)
         atualizar_cores()
-        imprimir_estoque()
+        #imprimir_estoque()
 
         # Publica no tópico da loja para realizar abastecimento
-        client.publish(topico_loja, nome_usuario + "," + nova_mensagem)
-    
+        mensagem_publicada = "Reposto Produto {} Quantidade {}".format(id_produto,qtd_produto)
+        client.publish(topico_loja, nome_usuario + "," + mensagem_publicada)
+
     # Noticia se alguém se conectou ao tópico
     elif remetente == "noticia":
         print(mensagem_separada[1])
 
 def publish():
-    nova = input()
+    #nova = input()
 
     # Atualiza classificação de cores do estoque
     atualizar_cores()
 
     # Lista de produtos com estoque na cor vermelha
     produtos_no_vermelho = list(estoque[estoque["Cor"] == "Vermelho"].index)
-    print(produtos_no_vermelho)
     # Quantidade necessária para que produtos no vermelho encham o estoque
     quantidade_produtos_no_vermelho = list(MAXIMO_ESTOQUE - estoque[estoque["Cor"] == "Vermelho"].Quantidade)
 
@@ -148,6 +147,7 @@ def publish():
             mensagem_publicada = "Produto {} Quantidade {}".format(produtos_no_vermelho[i],quantidade_produtos_no_vermelho[i])
             client.publish(topico[0][0], nome_usuario + "," + mensagem_publicada)
 
+    sleep(5)
     return publish()
 
 def subscribe():
