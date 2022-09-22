@@ -123,7 +123,10 @@ def on_message(client, userdata, msg):
     # Se Loja recebeu mensagem de crédito
     # do Centro de Distribuição, realiza operação de crédito
     if remetente == "Centro Distribuição":
-        print("{} -> {}: {}".format(remetente, nome_loja, mensagem_separada[1]))
+        loja_num = mensagem_separada[1].split(' ')[-1]
+        
+        if nome_loja == 'Loja ' + str(loja_num):
+            print("{} -> {}: {}".format(remetente, nome_loja, mensagem_separada[1]))
 
         # Obtém dados do produto
         dados_produto = mensagem_separada[1].split()

@@ -72,7 +72,7 @@ def atualizar_cores():
     conditions = [
         (estoque['Porcentagem'] >= 50),
         (estoque['Porcentagem'] >= 25) & (estoque['Porcentagem'] < 50),
-        (estoque['Porcentagem'] < 25)]
+        (estoque['Porcentagem'] >= 0) & (estoque['Porcentagem'] < 25)]
 
     # Lista com o valor atribuído a cada condição
     values = ['Verde', 'Amarelo', 'Vermelho']
@@ -121,7 +121,7 @@ def on_message(client, userdata, msg):
         #imprimir_estoque()
 
         # Publica no tópico da loja para realizar abastecimento
-        mensagem_publicada = "Reposto Produto {} Quantidade {}".format(id_produto,qtd_produto)
+        mensagem_publicada = "Reposto Produto {} Quantidade {} na {}".format(id_produto,qtd_produto,remetente)
         client.publish(topico_loja, nome_usuario + "," + mensagem_publicada)
 
     # Noticia se alguém se conectou ao tópico
