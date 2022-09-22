@@ -154,7 +154,7 @@ def publish():
     atualizar_cores()
 
     # Atualiza o arquivo .csv
-    estoque.to_csv('estoque.csv', index=True)
+    #estoque.to_csv('estoque.csv', index=True)
 
     # Lista de produtos com estoque na cor vermelha
     produtos_no_vermelho = list(estoque[estoque["Cor"] == "Vermelho"].index)
