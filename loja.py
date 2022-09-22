@@ -97,11 +97,11 @@ def clientes():
     # Exibe os dados da compra do cliente
     global contador_clientes
 
-    print("O cliente {} comprou {} produtos: ".format(contador_clientes, quantidade_produtos))
+    print("O cliente {} comprou {} produtos da {}: ".format(contador_clientes, quantidade_produtos, nome_loja))
     contador_clientes += 1
 
     for i in range(quantidade_produtos):
-        print("\t{} produtos do tipo {}".format(quantidade_comprados[i], produtos_comprados[i]))
+        print("\t{} produtos com ID {}".format(quantidade_comprados[i], produtos_comprados[i]))
 
 ######################################################################################
 #                           Funções Pub/Sub                                          #

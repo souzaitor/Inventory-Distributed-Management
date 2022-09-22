@@ -72,7 +72,7 @@ def atualizar_cores():
     conditions = [
         (estoque['Porcentagem'] >= 50),
         (estoque['Porcentagem'] >= 25) & (estoque['Porcentagem'] < 50),
-        (estoque['Porcentagem'] >= 0)  & (estoque['Porcentagem'] < 25)]
+        (estoque['Porcentagem'] < 25)]
 
     # Lista com o valor atribuído a cada condição
     values = ['Verde', 'Amarelo', 'Vermelho']
