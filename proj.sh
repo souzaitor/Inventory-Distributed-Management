@@ -72,22 +72,41 @@ exec python fabrica.py -n 69 -p 204 205 206 &
 exec python fabrica.py -n 70 -p 207 208 209 &
 exec python centro_distribuicao.py &
 exec python loja.py -n 1 &
+sleep 0.5
 exec python loja.py -n 2 &
+sleep 0.5
 exec python loja.py -n 3 &
+sleep 0.5
 exec python loja.py -n 4 &
+sleep 0.5
 exec python loja.py -n 5 &
+sleep 0.5
 exec python loja.py -n 6 &
+sleep 0.5
 exec python loja.py -n 7 &
+sleep 0.5
 exec python loja.py -n 8 &
+sleep 0.5
 exec python loja.py -n 9 &
+sleep 0.5
 exec python loja.py -n 10 &
+sleep 0.5
 exec python loja.py -n 11 &
+sleep 0.5
 exec python loja.py -n 12 &
+sleep 0.5
 exec python loja.py -n 13 &
+sleep 0.5
 exec python loja.py -n 14 &
+sleep 0.5
 exec python loja.py -n 15 &
+sleep 0.5
 exec python loja.py -n 16 &
+sleep 0.5
 exec python loja.py -n 17 &
+sleep 0.5
 exec python loja.py -n 18 &
+sleep 0.5
 exec python loja.py -n 19 &
-exec python loja.py -n 20
+sleep 0.5
+exec python loja.py -n 20 &
