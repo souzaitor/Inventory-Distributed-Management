@@ -42,7 +42,7 @@ def debito_estoque(index_produto, quantidade_produto):
 
     quantidade_antiga = estoque["Quantidade"].values[index_produto]
 
-    estoque.loc[index_produto,["Quantidade","Porcentagem"]] = [quantidade_antiga - quantidade_produto, (quantidade_antiga - quantidade_produto)/200 * 100]
+    estoque.loc[index_produto,["Quantidade","Porcentagem"]] = [quantidade_antiga - quantidade_produto, (quantidade_antiga - quantidade_produto)/MAXIMO_ESTOQUE * 100]
 
 def credito_estoque(index_produto, quantidade_produto):
     """Adiciona uma quantiadade de produtos do estoque
@@ -137,7 +137,7 @@ def on_message(client, userdata, msg):
         #imprimir_estoque()
         credito_estoque(id_produto, qtd_produto)
         atualizar_cores()
-        #imprimir_estoque()
+        imprimir_estoque()
 
     elif remetente == "noticia":
         print(mensagem_separada[1])
