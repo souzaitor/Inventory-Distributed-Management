@@ -12,7 +12,7 @@ nome_usuario = "Centro Distribuição"
 #topico = "Reabastecimento(produto)"
 topico_loja = "Repo"
 topico = [("Reabastecimento(produto)", 0), ("Repo", 0)]
-MAXIMO_ESTOQUE = 100
+MAXIMO_ESTOQUE = 200
 estoque = pd.read_csv('estoque_cd.csv', delimiter=',', index_col=0) 
 
 # Métodos
@@ -48,7 +48,7 @@ def debito_estoque(index_produto, quantidade_produto):
 
     quantidade_antiga = estoque["Quantidade"].values[index_produto]
 
-    estoque.loc[index_produto,["Quantidade","Porcentagem"]] = [quantidade_antiga - quantidade_produto, (quantidade_antiga - quantidade_produto)/200 * 100]
+    estoque.loc[index_produto,["Quantidade","Porcentagem"]] = [quantidade_antiga - quantidade_produto, (quantidade_antiga - quantidade_produto)/MAXIMO_ESTOQUE * 100]
 
 def on_connect(client, userdata, flags, rc):
     """

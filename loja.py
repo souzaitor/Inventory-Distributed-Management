@@ -19,7 +19,7 @@ argumentos = parser.parse_args()
 contador_clientes = 0
 nome_loja = "Loja " + str(argumentos.num)
 topico = "Repo"
-MAXIMO_ESTOQUE = 100
+MAXIMO_ESTOQUE = 200
 
 # Lê estoque de arquivo .csv e salva em lista
 estoque = pd.read_csv('estoque_loja.csv', delimiter=',', index_col=0) 
@@ -54,7 +54,7 @@ def credito_estoque(index_produto, quantidade_produto):
 
     quantidade_antiga = estoque["Quantidade"].values[index_produto]
 
-    estoque.loc[index_produto,["Quantidade","Porcentagem"]] = [quantidade_antiga + quantidade_produto, (quantidade_antiga + quantidade_produto)/200 * 100]
+    estoque.loc[index_produto,["Quantidade","Porcentagem"]] = [quantidade_antiga + quantidade_produto, (quantidade_antiga + quantidade_produto)/MAXIMO_ESTOQUE * 100]
 
 
 def atualizar_cores():
