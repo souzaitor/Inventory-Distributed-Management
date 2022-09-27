@@ -57,7 +57,7 @@ def credito_estoque(index_produto, quantidade_produto):
     estoque.loc[index_produto,["Quantidade","Porcentagem"]] = [quantidade_antiga + quantidade_produto, (quantidade_antiga + quantidade_produto)/MAXIMO_ESTOQUE * 100]
 
 
-def atualizar_cores():
+def  s():
     """
     Atualiza a classificação da cor dos produtos
     em estoque com base em suas porcentagens
@@ -137,6 +137,7 @@ def on_message(client, userdata, msg):
         #imprimir_estoque()
         credito_estoque(id_produto, qtd_produto)
         atualizar_cores()
+        print(id_produto, qtd_produto)
         imprimir_estoque()
 
     elif remetente == "noticia":
