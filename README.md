@@ -18,7 +18,7 @@ Projeto de implementação de solução distribuída para monitoramento de níve
 
 * A quantidade de classicação dos produtos é feita de qualquer maneira.
 
-* Para cada produto, se a quantidade em estoque estiver entre 100% e 50%, o produto recebe a cor **Verde**. Entre 50% e 25$ a cor **Amarela** e entre 25% e 0%, a cor **Vermelha**.
+* Para cada produto, se a quantidade em estoque estiver entre 100% e 50%, o produto recebe a cor **Verde**. Entre 50% e 25% a cor **Amarela** e entre 25% e 0%, a cor **Vermelha**.
 
 * Se a quantidade dos produtos em estoque for Verde ou Amarela, não se realiza nenhuma ação. Se a quantidade dos produtos em estoque for Vermelha, o centro de distribuição deve realizar reposição.
 
@@ -49,7 +49,7 @@ optional arguments:
                         
 ```
 
-* * O arquivo ao ser executado pelo terminal recebe dois parâmetros, uma flag -n acompanhada do número da fábrica e outra flag -p seguida da lista de produtos que a fabrica produz. Por exemplo, o comando abaixo inícia um nó da fábrica 1, que produz os produtos com ID 1, 2 e 3.
+* O arquivo ao ser executado pelo terminal recebe dois parâmetros, uma flag -n acompanhada do número da fábrica e outra flag -p seguida da lista de produtos que a fabrica produz. Por exemplo, o comando abaixo inícia um nó da fábrica 1, que produz os produtos com ID 1, 2 e 3.
 
 
 ```shell
@@ -334,5 +334,52 @@ python3 loja.py -n 1
 
 ![](https://i.imgur.com/AHyK766.png)
 
-* Com a implementação dos nós pronta, para montar a solução distribúida utilizamos o Docker para rodar as diversas instâncias das Fábricas e Lojas.
+* Com a implementação dos nós pronta, para montar a solução distribúida utilizamos o Docker para escalonar as aplicações para rodar as diversas instâncias das Fábricas e Lojas em diferentes contêineres.
+
+
+#### Docker
+
+<div style="text-align:center">
+    
+![](https://i.imgur.com/VWuZMeP.png)
+    
+</div>
+
+
+O Docker é uma plataforma open source que facilita a criação e administração de ambientes isolados. Ele possibilita o empacotamento de uma aplicação ou ambiente dentro de um container, se tornando portátil para qualquer outro host que contenha o Docker instalado. Então, você consegue criar, implantar, copiar e migrar de um ambiente para outro com maior flexibilidade. A ideia do Docker é subir apenas uma máquina, ao invés de várias. E, nessa única máquina, você pode rodar várias aplicações sem que haja conflitos entre elas.
+
+* **Imagem de contêiner**: um pacote com todas as dependências e informações necessárias para criar um contêiner. Uma imagem inclui todas as dependências (como estruturas), além da configuração de implantação e execução a ser usada por um runtime de contêiner. Geralmente, uma imagem deriva de várias imagens base que são camadas empilhadas umas sobre as outras para formar o sistema de arquivos do contêiner. Uma imagem é imutável depois de ser criada
+
+* **Dockerfile**: um arquivo de texto que contém instruções para criar uma imagem do Docker. É como um script em lotes, a primeira linha declara a imagem base com a qual começar e, em seguida, siga as instruções para instalar os programas necessários, copiar os arquivos e assim por diante, até obter o ambiente de trabalho que precisa.
+
+* **Build**: a ação de criar de uma imagem de contêiner com base nas informações e no contexto fornecido pelo Dockerfile, além de arquivos adicionais na pasta em que a imagem é criada. Você pode criar imagens com um simples comando da Docker CLI (Command-Line Interface).
+
+* **Contêiner**: uma instância de uma imagem do Docker. Um contêiner representa a execução de um único aplicativo, processo ou serviço. Consiste no conteúdo de uma imagem do Docker, um ambiente de execução e um conjunto padrão de instruções. Ao dimensionar um serviço, você cria várias instâncias de um contêiner da mesma imagem. Ou um trabalho em lotes pode criar vários contêineres da mesma imagem, passando parâmetros diferentes para cada instância.
+
+#### HiveMQ
+
+<div style="text-align:center">
+    
+![](https://i.imgur.com/HdytFZM.gif)
+    
+</div>
+
+HiveMQ é um broker MQTT e uma plataforma de mensagens baseada em cliente projetada para a movimentação rápida, eficiente e confiável de dados de e para dispositivos IoT conectados. Ele usa o protocolo MQTT para envio instantâneo e bidirecional de dados entre seu dispositivo e seus sistemas corporativos
+
+#### Integração dos serviços
+Com os programas dos nós da aplicação prontos, utilizando a plataforma do Docker criamos imagens instânciaves dos programas python para serem executadas em  91 contêineres separados, cada um contêndo sua aplicação python sendo executada. E para haver a comunicação entre dos contêineres, foi utilizado o broker gratuito do HiveMQ para processar as mensagens envidas e recebidas entre os mesmos. 
+
+Essa integração dos serviços utilizando o Docker ainda não foi implementada, por falta de conhecimento técnico da ferramenta, principalmente na execução de multiplas instâncias de contêineres com a ferramenta Docker Compose. Assim para simular essa integração com o Docker, foi criado um Shell Script para que instâncie a cadeia de distribuição chamando 91 processos python referente as fábricas, lojas e contro de distribuição.
+
+Os próximos passos para o projeto seriam obter um maior conhecimento técnico do Docker e Docker Compose para finalizar totalmente o projeto
+
+## Visualizando a solução
+
+Acesse o arquivo [Google Colab](https://colab.research.google.com/drive/1xWUnPQENsACNDFLDRI3FNekNJVa14ykD?usp=sharing) para visualizar o plot da simualção do projeto e a variação em estoque dos produtos no tempo. 
+
+## Referências
+
+* [Eclipse Paho MQTT Python](https://pypi.org/project/paho-mqtt/)
+* [Hive MQ](https://www.hivemq.com/)
+
 
