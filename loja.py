@@ -88,7 +88,7 @@ def clientes():
     # Aleatoriza quais foram as quantidades comprados pelos clientes
     quantidade_comprados = []
     for i in range(quantidade_produtos):
-        quantidade_comprados.append(random.randint(3, 10))
+        quantidade_comprados.append(random.randint(10, 20))
 
     # Realiza o débito do estoque
     for i in range(quantidade_produtos):
