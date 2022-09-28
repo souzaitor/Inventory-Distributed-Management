@@ -34,7 +34,7 @@
 </head>
 
 <body>
-    <div id="doc" class="markdown-body container-fluid comment-enabled comment-inner" data-hard-breaks="true"><h1 id="Solução-Distribuida-de-Cadeia-de-Abastecimento" data-id="Solução-Distribuida-de-Cadeia-de-Abastecimento"><a class="anchor hidden-xs" href="#Solução-Distribuida-de-Cadeia-de-Abastecimento" title="Solução-Distribuida-de-Cadeia-de-Abastecimento"><span class="octicon octicon-link"></span></a><span>Solução Distribuida de Cadeia de Abastecimento</span></h1><h2 id="Introdução" data-id="Introdução"><a class="anchor hidden-xs" href="#Introdução" title="Introdução"><span class="octicon octicon-link"></span></a><span>Introdução</span></h2><p><span>Projeto de implementação de solução distribuída para monitoramento de níveis de estoque de produtos em lojas de varejo e centro de distribuição.</span></p><h2 id="Enunciado-do-Problema" data-id="Enunciado-do-Problema"><a class="anchor hidden-xs" href="#Enunciado-do-Problema" title="Enunciado-do-Problema"><span class="octicon octicon-link"></span></a><span>Enunciado do Problema</span></h2><ul>
+    <div id="doc" class="markdown-body container-fluid comment-enabled" data-hard-breaks="true"><h1 id="Solução-Distribuida-de-Cadeia-de-Abastecimento" data-id="Solução-Distribuida-de-Cadeia-de-Abastecimento"><a class="anchor hidden-xs" href="#Solução-Distribuida-de-Cadeia-de-Abastecimento" title="Solução-Distribuida-de-Cadeia-de-Abastecimento"><span class="octicon octicon-link"></span></a><span>Solução Distribuida de Cadeia de Abastecimento</span></h1><h2 id="Introdução" data-id="Introdução"><a class="anchor hidden-xs" href="#Introdução" title="Introdução"><span class="octicon octicon-link"></span></a><span>Introdução</span></h2><p><span>Projeto de implementação de solução distribuída para monitoramento de níveis de estoque de produtos em lojas de varejo e centro de distribuição.</span></p><h2 id="Enunciado-do-Problema" data-id="Enunciado-do-Problema"><a class="anchor hidden-xs" href="#Enunciado-do-Problema" title="Enunciado-do-Problema"><span class="octicon octicon-link"></span></a><span>Enunciado do Problema</span></h2><ul>
 <li>
 <p><span>Utilizar Docker/Python como plataforma de solução e HiveMQ como broker de comunicação entre Fábricas / CD / Lojas.</span></p>
 </li>
@@ -48,7 +48,7 @@
 <p><span>A quantidade de classicação dos produtos é feita de qualquer maneira.</span></p>
 </li>
 <li>
-<p><span>Para cada produto, se a quantidade em estoque estiver entre 100% e 50%, o produto recebe a cor </span><strong><span>Verde</span></strong><span>. Entre 50% e 25$ a cor </span><strong><span>Amarela</span></strong><span> e entre 25% e 0%, a cor </span><strong><span>Vermelha</span></strong><span>.</span></p>
+<p><span>Para cada produto, se a quantidade em estoque estiver entre 100% e 50%, o produto recebe a cor </span><strong><span>Verde</span></strong><span>. Entre 50% e 25% a cor </span><strong><span>Amarela</span></strong><span> e entre 25% e 0%, a cor </span><strong><span>Vermelha</span></strong><span>.</span></p>
 </li>
 <li>
 <p><span>Se a quantidade dos produtos em estoque for Verde ou Amarela, não se realiza nenhuma ação. Se a quantidade dos produtos em estoque for Vermelha, o centro de distribuição deve realizar reposição.</span></p>
@@ -67,11 +67,7 @@ optional arguments:
                         Lista de produtos produzidos pela fábrica
                         
 </code></pre><ul>
-<li>
-<ul>
-<li><span>O arquivo ao ser executado pelo terminal recebe dois parâmetros, uma flag -n acompanhada do número da fábrica e outra flag -p seguida da lista de produtos que a fabrica produz. Por exemplo, o comando abaixo inícia um nó da fábrica 1, que produz os produtos com ID 1, 2 e 3.</span></li>
-</ul>
-</li>
+<li><span class="ui-comment-inline-span">O</span><span> arquivo ao ser executado pelo terminal recebe dois parâmetros, uma flag -n acompanhada do número da fábrica e outra flag -p seguida da lista de produtos que a fabrica produz. Por exemplo, o comando abaixo inícia um nó da fábrica 1, que produz os produtos com ID 1, 2 e 3.</span></li>
 </ul><pre><code class="shell hljs">python3 fabrica.py -n 1 -p 1 2 3
 </code></pre><ul>
 <li>
@@ -357,7 +353,27 @@ optional arguments:
 198  C                 20           10    Vermelho
 199  C                 20           10    Vermelho
 </code></pre><h3 id="Escalonando-a-solução" data-id="Escalonando-a-solução"><a class="anchor hidden-xs" href="#Escalonando-a-solução" title="Escalonando-a-solução"><span class="octicon octicon-link"></span></a><span>Escalonando a solução</span></h3><p><img src="https://i.imgur.com/AHyK766.png" alt="" loading="lazy"></p><ul>
-<li><span>Com a implementação dos nós pronta, para montar a solução distribúida utilizamos o Docker para rodar as diversas instâncias das Fábricas e Lojas.</span></li>
+<li><span>Com a implementação dos nós pronta, para montar a solução distribúida utilizamos o Docker para escalonar as aplicações para rodar as diversas instâncias das Fábricas e Lojas em diferentes contêineres.</span></li>
+</ul><h4 id="Docker" data-id="Docker"><a class="anchor hidden-xs" href="#Docker" title="Docker"><span class="octicon octicon-link"></span></a><span>Docker</span></h4><div style="text-align:center">
+<p><img src="https://i.imgur.com/VWuZMeP.png" alt="" loading="lazy"></p>
+</div><p><span>O Docker é uma plataforma open source que facilita a criação e administração de ambientes isolados. Ele possibilita o empacotamento de uma aplicação ou ambiente dentro de um container, se tornando portátil para qualquer outro host que contenha o Docker instalado. Então, você consegue criar, implantar, copiar e migrar de um ambiente para outro com maior flexibilidade. A ideia do Docker é subir apenas uma máquina, ao invés de várias. E, nessa única máquina, você pode rodar várias aplicações sem que haja conflitos entre elas.</span></p><ul>
+<li>
+<p><strong><span>Imagem de contêiner</span></strong><span>: um pacote com todas as dependências e informações necessárias para criar um contêiner. Uma imagem inclui todas as dependências (como estruturas), além da configuração de implantação e execução a ser usada por um runtime de contêiner. Geralmente, uma imagem deriva de várias imagens base que são camadas empilhadas umas sobre as outras para formar o sistema de arquivos do contêiner. Uma imagem é imutável depois de ser criada</span></p>
+</li>
+<li>
+<p><strong><span>Dockerfile</span></strong><span>: um arquivo de texto que contém instruções para criar uma imagem do Docker. É como um script em lotes, a primeira linha declara a imagem base com a qual começar e, em seguida, siga as instruções para instalar os programas necessários, copiar os arquivos e assim por diante, até obter o ambiente de trabalho que precisa.</span></p>
+</li>
+<li>
+<p><strong><span>Build</span></strong><span>: a ação de criar de uma imagem de contêiner com base nas informações e no contexto fornecido pelo Dockerfile, além de arquivos adicionais na pasta em que a imagem é criada. Você pode criar imagens com um simples comando da Docker CLI (Command-Line Interface).</span></p>
+</li>
+<li>
+<p><strong><span>Contêiner</span></strong><span>: uma instância de uma imagem do Docker. Um contêiner representa a execução de um único aplicativo, processo ou serviço. Consiste no conteúdo de uma imagem do Docker, um ambiente de execução e um conjunto padrão de instruções. Ao dimensionar um serviço, você cria várias instâncias de um contêiner da mesma imagem. Ou um trabalho em lotes pode criar vários contêineres da mesma imagem, passando parâmetros diferentes para cada instância.</span></p>
+</li>
+</ul><h4 id="HiveMQ" data-id="HiveMQ"><a class="anchor hidden-xs" href="#HiveMQ" title="HiveMQ"><span class="octicon octicon-link"></span></a><span>HiveMQ</span></h4><div style="text-align:center">
+<p><img src="https://i.imgur.com/HdytFZM.gif" alt="" loading="lazy"></p>
+</div><p><span>HiveMQ é um broker MQTT e uma plataforma de mensagens baseada em cliente projetada para a movimentação rápida, eficiente e confiável de dados de e para dispositivos IoT conectados. Ele usa o protocolo MQTT para envio instantâneo e bidirecional de dados entre seu dispositivo e seus sistemas corporativos</span></p><h4 id="Integração-dos-serviços" data-id="Integração-dos-serviços"><a class="anchor hidden-xs" href="#Integração-dos-serviços" title="Integração-dos-serviços"><span class="octicon octicon-link"></span></a><span>Integração dos serviços</span></h4><p><span>Com os programas dos nós da aplicação prontos, utilizando a plataforma do Docker criamos imagens instânciaves dos programas python para serem executadas em  91 contêineres separados, cada um contêndo sua aplicação python sendo executada. E para haver a comunicação entre dos contêineres, foi utilizado o broker gratuito do HiveMQ para processar as mensagens envidas e recebidas entre os mesmos.</span></p><p><span>Essa integração dos serviços utilizando o Docker ainda não foi implementada, por falta de conhecimento técnico da ferramenta, principalmente na execução de multiplas instâncias de contêineres com a ferramenta Docker Compose. Assim para simular essa integração com o Docker, foi criado um Shell Script para que instâncie a cadeia de distribuição chamando 91 processos python referente as fábricas, lojas e contro de distribuição.</span></p><p><span>Os próximos passos para o projeto seriam obter um maior conhecimento técnico do Docker e Docker Compose para finalizar totalmente o projeto</span></p><h2 id="Visualizando-a-solução" data-id="Visualizando-a-solução"><a class="anchor hidden-xs" href="#Visualizando-a-solução" title="Visualizando-a-solução"><span class="octicon octicon-link"></span></a><span>Visualizando a solução</span></h2><p><span>Acesse o arquivo </span><a href="https://colab.research.google.com/drive/1xWUnPQENsACNDFLDRI3FNekNJVa14ykD?usp=sharing" target="_blank" rel="noopener"><span>Google Colab</span></a><span> para visualizar o plot da simualção do projeto e a variação em estoque dos produtos no tempo.</span></p><h2 id="Referências" data-id="Referências"><a class="anchor hidden-xs" href="#Referências" title="Referências"><span class="octicon octicon-link"></span></a><span>Referências</span></h2><ul>
+<li><a href="https://pypi.org/project/paho-mqtt/" target="_blank" rel="noopener"><span>Eclipse Paho MQTT Python</span></a></li>
+<li><a href="https://www.hivemq.com/" target="_blank" rel="noopener"><span>Hive MQ</span></a></li>
 </ul></div>
     <div class="ui-toc dropup unselectable hidden-print" style="display:none;">
         <div class="pull-right dropdown">
@@ -376,6 +392,8 @@ optional arguments:
 <li><a href="#Escalonando-a-solução" title="Escalonando a solução">Escalonando a solução</a></li>
 </ul>
 </li>
+<li><a href="#Visualizando-a-solução" title="Visualizando a solução">Visualizando a solução</a></li>
+<li><a href="#Referências" title="Referências">Referências</a></li>
 </ul>
 </li>
 </ul>
@@ -395,6 +413,8 @@ optional arguments:
 <li><a href="#Escalonando-a-solução" title="Escalonando a solução">Escalonando a solução</a></li>
 </ul>
 </li>
+<li><a href="#Visualizando-a-solução" title="Visualizando a solução">Visualizando a solução</a></li>
+<li><a href="#Referências" title="Referências">Referências</a></li>
 </ul>
 </li>
 </ul>
