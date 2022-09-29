@@ -77,7 +77,7 @@ python3 centro_distribuicao.py
 
 * O programa `centro_distribuicao.py` instancia um cliente MQTT e o conecta no broker da HiveMQ. Depois, cria duas threads, uma do método `subscribe()` e uma do método `publish()`, e as executa em loop.
 
-* O método `subscribe()` inscreve o cliente no tópico **Reabastecimento(produto)** e fica chamando os métodos     de conexão e de mensagens.
+* O método `subscribe()` inscreve o cliente no tópico **Reabastecimento(produto)** e no tópico **Repo**, e fica chamando os métodos     de conexão e de mensagens.
 
 * O método de conexão `on_conect()` é chamado quando o broker responde a solicitação de conexão e realiza a inscrição de fato do centro de distribuição no tópico, por meio do método da biblioteca paho.mqtt.
 
