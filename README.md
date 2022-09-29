@@ -121,9 +121,9 @@ python3 loja.py -n 1
 *  Se  o remente da mensagem for o **centro de distribuição**, no tópico  **Repo**, repondo uma certa quantidade de um produto, então a loja realiza a operação de crédito, aumentando a quantidade de produtos recebidos no estoque. 
 
 
-* O método `publish()` atualiza as cores do estoque no DataFrame com base na porcentagem atual de produto em estoque, e em seguida lista todos os produtos em estoque que estão no vermelho. Para cada um deles (produtos no vermelho) publica no tópico **Repo**, requisitando uma certa de quantidade de produtos para o centro de distribuição para reabastecer o estoque da loja.
+* O método `publish()` atualiza as cores do estoque no DataFrame com base na porcentagem atual de produto em estoque, e em seguida lista todos os produtos em estoque que estão no vermelho. Para cada um deles (produtos no vermelho) publica no tópico **Repo**, requisitando uma certa de quantidade de produtos para o centro de distribuição para reabastecer o estoque da loja. Chama também o método `clientes()` que simula a compra de produtos por clientes, a cada tempo aleatório, uma quantidade aleatória de clientes compra uma quantidade aleatória de produtos.
 
-* O estoque das lojas foi implementado como um DataFrame que lê um arquivo .csv. Assumindo que o estoque tem capacidade máxima de 100 produtos. A configuração inicial do estoque é a seguinte:
+* O estoque das lojas foi implementado como um DataFrame que lê um arquivo .csv. Assumindo que o estoque tem capacidade máxima de 200 produtos. A configuração inicial do estoque é a seguinte:
 
 ```
      Tipo      Quantidade    Porcentagem  Cor
